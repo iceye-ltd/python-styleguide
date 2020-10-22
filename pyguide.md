@@ -174,7 +174,7 @@ of *dos and don'ts* for Python programs.
 
 To help you format code correctly, we've created a [settings file for Vim](google_python_style.vim). For Emacs, the default settings should be fine.
 
-Many teams use the [yapf](https://github.com/google/yapf/)
+Many teams use the [black](https://github.com/psf/black)
 auto-formatter to avoid arguing over formatting.
 
 
@@ -896,7 +896,7 @@ function may only contain an expression.
 #### 2.10.4 Decision 
 
 Okay to use them for one-liners. If the code inside the lambda function is
-longer than 60-80 chars, it's probably better to define it as a regular
+longer than 60-88 chars, it's probably better to define it as a regular
 [nested function](#lexical-scoping).
 
 For common operations like multiplication, use the functions from the `operator`
@@ -1696,15 +1696,18 @@ two statements on the same line.
 <a id="line-length"></a>
 ### 3.2 Line length 
 
-Maximum line length is *80 characters*.
+Maximum line length is *88 characters*.
 
-Explicit exceptions to the 80 character limit:
+Explicit exceptions to the 88 character limit:
 
 -   Long import statements.
 -   URLs, pathnames, or long flags in comments.
 -   Long string module level constants not containing whitespace that would be
     inconvenient to split across lines such as URLs or pathnames.
     -   Pylint disable comments. (e.g.: `# pylint: disable=invalid-name`)
+
+Black uses line length of 88 as default, which should better reflect 
+modern terminals while not diverting too much from old-style 80 char limit.
 
 Do not use backslash line continuation except for `with` statements requiring
 three or more context managers.
@@ -1768,8 +1771,8 @@ Yes:  with very_long_first_expression_function() as spam:
 Make note of the indentation of the elements in the line continuation examples
 above; see the [indentation](#s3.4-indentation) section for explanation.
 
-In all other cases where a line exceeds 80 characters, and the
-[yapf](https://github.com/google/yapf/)
+In all other cases where a line exceeds 88 characters, and the
+[black](https://github.com/psf/black/)
 auto-formatter does not help bring the line below the limit, the line is allowed
 to exceed this maximum.
 
@@ -1884,13 +1887,13 @@ No:    # Stuff on first line forbidden
 <a id="trailing_commas"></a>
 
 <a id="trailing-comma"></a>
+
 ### 3.4.1 Trailing commas in sequences of items? 
 
-Trailing commas in sequences of items are recommended only when the closing
-container token `]`, `)`, or `}` does not appear on the same line as the final
-element. The presence of a trailing comma is also used as a hint to our Python
-code auto-formatter [YAPF](https://pypi.org/project/yapf/) to direct it to auto-format the container
-of items to one item per line when the `,` after the final element is present.
+To make it more simple to add or remove an entry in list of values, 
+[black](https://github.com/psf/black/) adds trailing comma even after the 
+last value if not present already. It it recommended to let black 
+handle trailings commas using its default settings.
 
 ```python
 Yes:   golomb3 = [0, 1, 3]
@@ -2069,7 +2072,7 @@ by `pydoc`.
 double-quote `"""` format for docstrings (per
 [PEP 257](https://www.google.com/url?sa=D&q=http://www.python.org/dev/peps/pep-0257/)).
 A docstring should be organized as a summary line (one physical line not
-exceeding 80 characters) terminated by a period, question mark, or exclamation
+exceeding 88 characters) terminated by a period, question mark, or exclamation
 point. When writing more (encouraged), this must be followed by a blank line,
 followed by the rest of the docstring starting at the same cursor position as
 the first quote of the first line. There are more formatting guidelines for
@@ -2146,7 +2149,7 @@ aptly described using a one-line docstring.
 [*Args:*](#doc-function-args)
 :   List each parameter by name. A description should follow the name, and be
     separated by a colon followed by either a space or newline. If the
-    description is too long to fit on a single 80-character line, use a hanging
+    description is too long to fit on a single 88-character line, use a hanging
     indent of 2 or 4 spaces more than the parameter name (be consistent with the
     rest of the docstrings in the file). The description should include required
     type(s) if the code does not contain a corresponding type annotation. If a
